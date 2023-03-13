@@ -1,0 +1,11 @@
+#ifndef LOW_LEVEL_PROGRAMMING2_STATE_H
+#define LOW_LEVEL_PROGRAMMING2_STATE_H
+
+enum states{
+    S_NEXT = 0,
+    S_NAME,
+    S_ATTRIBUTE,
+    S_ERROR
+};
+
+#endif //LOW_LEVEL_PROGRAMMING2_STATE_H
