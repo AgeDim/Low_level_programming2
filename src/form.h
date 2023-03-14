@@ -46,8 +46,8 @@ union types {
     double real;
 } ;
 
-void *test_malloc(size_t size_of);
-void *print_ram();
+void *my_malloc(size_t size_of);
+void print_ram();
 
 struct op {
         uint8_t field;
@@ -92,16 +92,16 @@ struct list_level {
     struct filter_list *filters;
 };
 
-struct view {
+struct form {
     enum crud crud_operation;
     struct list_level *tree;
 };
 
-struct view *create_view(enum crud crud_op);
+struct form *create_form(enum crud crud_op);
 
-struct list_level *create_list_level(uint8_t negative, uint8_t any, enum parent place);
+struct list_level *create_level_list(uint8_t negative, uint8_t any, enum parent place);
 
-struct list_element *create_list_element(int64_t id);
+struct list_element *create_element_list    (int64_t id);
 
 struct filter_list *create_filter_list();
 
