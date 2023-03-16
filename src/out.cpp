@@ -18,13 +18,21 @@ static void print_string(struct field *string) {
 
 static void print_operator(struct op *op, uint8_t number) {
     printf("----OPERATOR %d: ", number);
-    switch (op->type){
-        case STRING_TYPE:print_string(op->value.string); break;
-        case INTEGER_TYPE: printf("%lld", op->value.integer); break;
-        case FLOAT_TYPE: printf("%f", op->value.real); break;
-        default: printf("UNKNOWN TYPE"); break;
+    switch (op->type) {
+        case STRING_TYPE:
+            print_string(op->value.string);
+            break;
+        case INTEGER_TYPE:
+            printf("%lld", op->value.integer);
+            break;
+        case FLOAT_TYPE:
+            printf("%f", op->value.real);
+            break;
+        default:
+            printf("UNKNOWN TYPE");
+            break;
     }
-    if (op->field){ printf(" (IS FIELD)");}
+    if (op->field) { printf(" (IS FIELD)"); }
     printf("\n");
 }
 
@@ -35,57 +43,65 @@ static void print_filter(struct filter_list *list) {
     struct comparator_list *comp_list;
     struct filter *filt_list;
     while (list) {
-        printf("--FILTER: %zu\n", level++);
-        printf("--IS NEGATIVE: %d\n", list->value->negative);
+        cout << "--FILTER: " << level++ << endl;
+        cout << "--IS NEGATIVE: " << list->value->negative << endl;
         size_t comp_level = 1;
         filt_list = list->value;
         comp_list = filt_list->comparators;
         if (comp_list) {
-            printf("---COMPARATORS---\n");
+            cout << "---COMPARATORS---" << endl;
             while (comp_list) {
                 printf("----COMPARATOR: %zu\n", comp_level++);
                 printf("----IS NEGATIVE: %d\n", comp_list->value->negative);
                 if (comp_list->value->true_flag) {
-                    printf("----COMPARATOR IS TRUE\n");
+                    cout << "----COMPARATOR IS TRUE " << endl;
                 } else {
                     print_operator(comp_list->value->op1, 1);
-                    printf("----OPERATION: %c\n", comp_list->value->operation);
+                    cout << "----OPERATION: " << comp_list->value->operation << endl;
                     print_operator(comp_list->value->op2, 2);
                 }
-                printf("----END OF COMPARATOR\n");
+                cout << "----END OF COMPARATOR " << endl;
                 comp_list = comp_list->next;
             }
-            printf("---END OF COMPARATORS\n");
+            cout << "---END OF COMPARATORS" << endl;
         }
-        printf("--END OF FILTER\n");
+        cout << "--END OF FILTER" << endl;
         list = list->next;
     }
-    printf("-END OF FILTERS\n");
+    cout << "-END OF FILTERS" << endl;
 }
 
 static void print_form(struct form *form) {
     if (!form) return;
-    printf("--------------------------------\n");
-    printf("OPERATION: %c\n", form->crud_operation);
-    printf("--------------------------------\n");
+    cout << "--------------------------------" << endl;
+    cout << "OPERATION: " << form->crud_operation << endl;
+    cout << "--------------------------------" << endl;
     size_t level = 1;
     struct list_level *list = form->tree;
     while (list) {
-        printf("LEVEL: %zu\n", level++);
+        cout << "LEVEL: " << level++ << endl;
         switch (list->place) {
-            case P_FREE: printf("FREE RELATION\n"); break;
-            case P_ROOT: printf("ROOT RELATION\n"); break;
-            case P_RELATIVE: printf("CHILD RELATION\n"); break;
-            default: printf("UNKNOWN RELATION\n"); break;
+            case P_FREE:
+                cout << "FREE RELATION" << endl;
+                break;
+            case P_ROOT:
+                cout << "ROOT RELATION\n" << endl;
+                break;
+            case P_RELATIVE:
+                cout << "CHILD RELATION\n" << endl;
+                break;
+            default:
+                cout << "UNKNOWN RELATION\n" << endl;
+                break;
         }
-        printf("IS NEGATIVE: %d\n", list->negative);
+        cout << "IS NEGATIVE: " << list->negative << endl;
         if (list->any) {
-            printf("ANY ID: *\n");
+            cout << "ANY ID: *" << endl;
         } else {
-            printf("ID: %lld\n", list->value.element);
+            cout << "ID: " << list->value.element << endl;
         }
         print_filter(list->filters);
-        printf("--------------------------------\n");
+        cout << "--------------------------------" << endl;
         list = list->next;
     }
 }
@@ -94,7 +110,7 @@ static void print_error() {
     cout << "Syntax error!" << endl;
 }
 
-static void print_wtf_happened() {
+static void print_unsupp() {
     cout << "Unsupported exception!" << endl;
 }
 
@@ -104,6 +120,6 @@ void print_result(enum states final_state, char *res_string, struct form *form) 
     } else if (final_state == S_ERROR) {
         print_error();
     } else {
-        print_wtf_happened();
+        print_unsupp();
     }
 }
