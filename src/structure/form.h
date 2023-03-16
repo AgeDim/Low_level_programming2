@@ -23,8 +23,7 @@ enum compare {
     COMPARE_EQUAL = '=',
     COMPARE_LESS = '<',
     COMPARE_GREATER = '>',
-    COMPARE_SUBSTR = ':',
-    COMPARE_NOT_EQUAL = '!='
+    COMPARE_SUBSTR = ':'
 };
 
 

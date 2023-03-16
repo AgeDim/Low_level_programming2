@@ -1,8 +1,7 @@
-#include <cstdio>
 #include <iostream>
 #include "parser.h"
-#include "out.h"
 #include "structure/list_level.h"
+#include "out/out.h"
 
 #define MAX_COMMAND_SIZE 1024
 
@@ -39,9 +38,5 @@ int main(){
         form->tree = cur_level;
     }
     print_result(current_state, for_parse, form);
-//    printf("View ram: ");
-//    ram_info();
-//    printf("Full ram: ");
-//    ram_info();
     return 0;
 }

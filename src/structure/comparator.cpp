@@ -7,3 +7,4 @@ comparator::comparator(){
     this->op1 = nullptr;
     this->op2 = nullptr;
 }
+

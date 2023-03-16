@@ -1,12 +1,8 @@
 #include <cstddef>
 #include <iostream>
 #include "out.h"
-#include "structure/form.h"
-#include "structure/list_level.h"
-#include "structure/op.h"
-#include "structure/field.h"
-#include "structure/filter_list.h"
-#include "structure/comparator_list.h"
+#include "../structure/form.h"
+#include "../structure/list_level.h"
 
 using namespace std;
 
@@ -44,7 +40,7 @@ static void print_filter(struct filter_list *list) {
     struct filter *filt_list;
     while (list) {
         cout << "--FILTER: " << level++ << endl;
-        cout << "--IS NEGATIVE: " << list->value->negative << endl;
+        printf("--IS NEGATIVE: %d\n", list->value->negative);
         size_t comp_level = 1;
         filt_list = list->value;
         comp_list = filt_list->comparators;
@@ -57,7 +53,7 @@ static void print_filter(struct filter_list *list) {
                     cout << "----COMPARATOR IS TRUE " << endl;
                 } else {
                     print_operator(comp_list->value->op1, 1);
-                    cout << "----OPERATION: " << comp_list->value->operation << endl;
+                    printf("----OPERATION: %c\n", comp_list->value->operation);
                     print_operator(comp_list->value->op2, 2);
                 }
                 cout << "----END OF COMPARATOR " << endl;
@@ -74,7 +70,7 @@ static void print_filter(struct filter_list *list) {
 static void print_form(struct form *form) {
     if (!form) return;
     cout << "--------------------------------" << endl;
-    cout << "OPERATION: " << form->crud_operation << endl;
+    printf("OPERATION: %c\n", form->crud_operation);
     cout << "--------------------------------" << endl;
     size_t level = 1;
     struct list_level *list = form->tree;
@@ -85,16 +81,16 @@ static void print_form(struct form *form) {
                 cout << "FREE RELATION" << endl;
                 break;
             case P_ROOT:
-                cout << "ROOT RELATION\n" << endl;
+                cout << "ROOT RELATION" << endl;
                 break;
             case P_RELATIVE:
-                cout << "CHILD RELATION\n" << endl;
+                cout << "CHILD RELATION" << endl;
                 break;
             default:
-                cout << "UNKNOWN RELATION\n" << endl;
+                cout << "UNKNOWN RELATION" << endl;
                 break;
         }
-        cout << "IS NEGATIVE: " << list->negative << endl;
+        printf("IS NEGATIVE: %d\n", list->negative);
         if (list->any) {
             cout << "ANY ID: *" << endl;
         } else {
